@@ -1,3 +1,22 @@
 {
-	"name" : "pagination/pagination"
+	"name" : "shorif2000/pagination",
+	"description" : "creates a pagination control structure for a list of items",
+	"authors" : [{
+			"name" : "Sharif Uddin",
+			"email" : "shorif200@hotmail.com"
+		}
+	],
+	"minimum-stability" : "dev",
+	"require" : {
+		"php" : ">=7"
+	},
+	"autoload" : {
+		"psr-0" : {
+			"Pagination" : "src/"
+		}
+	},
+	"type" : "library",
+	"keywords" : [
+		"pagination paginator"
+	]
 }
