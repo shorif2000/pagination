@@ -37,9 +37,9 @@ class Paginator
     public function __construct($options = [])
     {
         $this->totalItems = count($options['data']);
-        $this->itemsPerPage = $options['itemsPerPage'];
-        $this->currentPage = $options['currentPage'];
-        $this->urlPattern = $options['urlPattern'];
+        $this->itemsPerPage = $options['itemsPerPage'] ?? 10;
+        $this->currentPage = $options['currentPage'] ?? 1;
+        //$this->urlPattern = $options['urlPattern'];
         $this->updateNumPages();
     }
 
