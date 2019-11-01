@@ -24,21 +24,22 @@ class Paginator
 
     /**
      *
-     * @param int $totalItems
+     * @param array options can hold
+     *  int $totalItems
      *            The total number of items.
-     * @param int $itemsPerPage
+     *  int $itemsPerPage
      *            The number of items per page.
-     * @param int $currentPage
+     *  int $currentPage
      *            The current page number.
-     * @param string $urlPattern
-     *            A URL for each page, with (:num) as a placeholder for the page number. Ex. '/foo/page/(:num)'
+     *  string $urlPattern
+     *            A URL for each page, with (:num) as a placeholder for the page number. Ex. '/foo/bar/(:num)'
      */
-    public function __construct($totalItems, $itemsPerPage, $currentPage, $urlPattern = '')
+    public function __construct($options = [])
     {
-        $this->totalItems = $totalItems;
-        $this->itemsPerPage = $itemsPerPage;
-        $this->currentPage = $currentPage;
-        $this->urlPattern = $urlPattern;
+        $this->totalItems = count($options['data']);
+        $this->itemsPerPage = $options['itemsPerPage'];
+        $this->currentPage = $options['currentPage'];
+        $this->urlPattern = $options['urlPattern'];
         $this->updateNumPages();
     }
 
