@@ -1,9 +1,10 @@
 <?php
 namespace shorif2000\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Pagination\Paginator;
 
-class PaginatorTest extends \PHPUnit_Framework_TestCase
+class PaginatorTest extends TestCase
 {
 
     /** @var Paginator */
@@ -24,9 +25,14 @@ class PaginatorTest extends \PHPUnit_Framework_TestCase
 
     public function testArray()
     {
-        $input = ['alpha', 'beta', 'delta', 'gamma'];
+        $input = [
+            'alpha',
+            'beta',
+            'delta',
+            'gamma'
+        ];
         $options = [
-            'data'=>   $input
+            'data' => $input
         ];
         $pagination = (new Paginator($options))->paginate($pageNumber ?? 1);
         print_r($pagination);
