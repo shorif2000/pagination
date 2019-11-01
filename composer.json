@@ -18,5 +18,8 @@
 	"type" : "library",
 	"keywords" : [
 		"pagination paginator"
-	]
+	],
+	"require-dev": {
+		"phpunit/phpunit": "^8.5@dev"
+	}
 }
