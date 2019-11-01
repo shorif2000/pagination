@@ -10,7 +10,7 @@ class PaginatorTest extends TestCase
     /** @var Paginator */
     protected $paginator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $numItems = 100;
         $itemsPerPage = 10;
