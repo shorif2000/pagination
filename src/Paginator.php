@@ -1,7 +1,12 @@
 <?php
 namespace Pagination;
 
-class Paginator
+use Pagination\Lib\PaginatorInterface;
+use Pagination\Lib\DefaultPaginator;
+use Pagination\Lib\Collection;
+use Pagination\Lib\ArrayData;
+
+class Paginator implements PaginatorInterface
 {
 
     const NUM_PLACEHOLDER = '(:num)';
@@ -10,7 +15,7 @@ class Paginator
 
     protected $numPages;
 
-    protected $itemsPerPage;
+    protected $limit;
 
     protected $currentPage;
 
@@ -22,30 +27,41 @@ class Paginator
 
     protected $nextText = 'Next';
 
-    /**
-     *
-     * @param array options can hold
-     *  int $totalItems
-     *            The total number of items.
-     *  int $itemsPerPage
-     *            The number of items per page.
-     *  int $currentPage
-     *            The current page number.
-     *  string $urlPattern
-     *            A URL for each page, with (:num) as a placeholder for the page number. Ex. '/foo/bar/(:num)'
-     */
     public function __construct($options = [])
     {
-        $this->totalItems = count($options['data']);
-        $this->itemsPerPage = $options['itemsPerPage'] ?? 10;
+        $this->items = $options['data'];
+        $this->limit = $options['limit'] ?? 10;
         $this->currentPage = $options['currentPage'] ?? 1;
         //$this->urlPattern = $options['urlPattern'];
         $this->updateNumPages();
     }
+    
+    public function paginate(int $page = 1): PaginatorInterface
+    {
+        if ($page <= 0 || $this->limit <= 0) {
+            throw new \LogicException("Invalid parameters.");
+        }
+        $offset = ($page - 1) * $this->limit;
+        $pagination = new DefaultPaginator();
+        $items = new Collection($this->items, $offset, $this->limit);
+        if ($this->items instanceof \ArrayObject || is_array($this->items)) {
+            $data = new ArrayData();
+            $data->fetchItems($items);
+        } else {
+            throw new \RuntimeException("Data type not supported for pagination.");
+        }
+        $pagination->setCurrentPageNumber($page);
+        $pagination->setNumberOfPages((int) ceil($items->getCount() / $items->getLimit()));
+        $pagination->setItems($items->getItems());
+        $pagination->setTotal($items->getCount());
+        $pagination->setTotalOnCurrentPage(count($items->getItems()));
+        $pagination->setTotalPerPage($this->limit);
+        return $pagination;
+    }
 
     protected function updateNumPages()
     {
-        $this->numPages = ($this->itemsPerPage == 0 ? 0 : (int) ceil($this->totalItems / $this->itemsPerPage));
+        $this->numPages = ($this->limit == 0 ? 0 : (int) ceil($this->totalItems / $this->limit));
     }
 
     public function setMaxPagesToShow($maxPagesToShow)
@@ -62,10 +78,6 @@ class Paginator
         return $this->maxPagesToShow;
     }
 
-    /**
-     *
-     * @param int $currentPage
-     */
     public function setCurrentPage($currentPage)
     {
         $this->currentPage = $currentPage;
@@ -76,26 +88,18 @@ class Paginator
         return $this->currentPage;
     }
 
-    /**
-     *
-     * @param int $itemsPerPage
-     */
-    public function setItemsPerPage($itemsPerPage)
+    public function setItemsPerPage(int $limit)
     {
-        $this->itemsPerPage = $itemsPerPage;
+        $this->limit = $limit;
         $this->updateNumPages();
     }
 
     public function getItemsPerPage() : int
     {
-        return $this->itemsPerPage;
+        return $this->limit;
     }
 
-    /**
-     *
-     * @param int $totalItems
-     */
-    public function setTotalItems($totalItems)
+    public function setTotalItems(int $totalItems)
     {
         $this->totalItems = $totalItems;
         $this->updateNumPages();
@@ -113,20 +117,13 @@ class Paginator
         return $this->numPages;
     }
 
-    /**
-     *
-     * @param string $urlPattern
-     */
-    public function setUrlPattern($urlPattern)
+    public function setUrlPattern(string $urlPattern)
     {
         $this->urlPattern = $urlPattern;
     }
 
-    /**
-     *
-     * @return string
-     */
-    public function getUrlPattern()
+
+    public function getUrlPattern(): string
     {
         return $this->urlPattern;
     }
@@ -284,7 +281,7 @@ class Paginator
 
     public function getCurrentPageFirstItem()
     {
-        $first = ($this->currentPage - 1) * $this->itemsPerPage + 1;
+        $first = ($this->currentPage - 1) * $this->limit + 1;
         if ($first > $this->totalItems) {
             return null;
         }
@@ -297,7 +294,7 @@ class Paginator
         if ($first === null) {
             return null;
         }
-        $last = $first + $this->itemsPerPage - 1;
+        $last = $first + $this->limit - 1;
         if ($last > $this->totalItems) {
             return $this->totalItems;
         }
@@ -315,4 +312,41 @@ class Paginator
         $this->nextText = $text;
         return $this;
     }
+    public function setTotal($total)
+    {}
+
+    public function getItems()
+    {}
+
+    public function getNumberOfPages(): int
+    {}
+
+    public function setNumberOfPages($numberOfPages)
+    {}
+
+    public function getCurrentPageNumber(): int
+    {}
+
+    public function setItems($items)
+    {}
+
+    public function getTotalOnCurrentPage(): int
+    {}
+
+    public function count()
+    {}
+
+    public function getTotalPerPage(): int
+    {}
+
+    public function getTotal(): int
+    {}
+
+    public function setCurrentPageNumber($currentPageNumber)
+    {}
+
+    public function getViewData(): array
+    {}
+
+    
 }

@@ -34,6 +34,7 @@ class PaginatorTest extends TestCase
         $options = [
             'data' => $input
         ];
+        $pageNumber = 1;
         $pagination = (new Paginator($options))->paginate($pageNumber ?? 1);
         print_r($pagination);
     }
