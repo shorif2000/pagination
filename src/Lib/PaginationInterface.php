@@ -12,5 +12,5 @@ interface PaginationInterface
      * @param int $limit
      * @return PaginationInterface
      */
-    public function paginate($collection, int $page = 1, int $limit = 1): PaginatorInterface;
+    public function paginate(int $page = 1): PaginatorInterface;
 }
