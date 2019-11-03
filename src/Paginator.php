@@ -1,12 +1,12 @@
 <?php
 namespace Pagination;
 
-use Pagination\Lib\PaginatorInterface;
+use Pagination\Lib\PaginationInterface;
 use Pagination\Lib\DefaultPaginator;
 use Pagination\Lib\Collection;
 use Pagination\Lib\ArrayData;
 
-class Paginator implements PaginatorInterface
+class Paginator implements PaginationInterface
 {
 
     const NUM_PLACEHOLDER = '(:num)';
@@ -36,7 +36,7 @@ class Paginator implements PaginatorInterface
         $this->updateNumPages();
     }
     
-    public function paginate(int $page = 1): PaginatorInterface
+    public function paginate(int $page = 1): PaginationInterface
     {
         if ($page <= 0 || $this->limit <= 0) {
             throw new \LogicException("Invalid parameters.");
@@ -312,41 +312,6 @@ class Paginator implements PaginatorInterface
         $this->nextText = $text;
         return $this;
     }
-    public function setTotal($total)
-    {}
-
-    public function getItems()
-    {}
-
-    public function getNumberOfPages(): int
-    {}
-
-    public function setNumberOfPages($numberOfPages)
-    {}
-
-    public function getCurrentPageNumber(): int
-    {}
-
-    public function setItems($items)
-    {}
-
-    public function getTotalOnCurrentPage(): int
-    {}
-
-    public function count()
-    {}
-
-    public function getTotalPerPage(): int
-    {}
-
-    public function getTotal(): int
-    {}
-
-    public function setCurrentPageNumber($currentPageNumber)
-    {}
-
-    public function getViewData(): array
-    {}
 
     
 }
