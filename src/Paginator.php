@@ -5,6 +5,7 @@ use Pagination\Lib\PaginationInterface;
 use Pagination\Lib\DefaultPaginator;
 use Pagination\Lib\Collection;
 use Pagination\Lib\ArrayData;
+use Pagination\Lib\PaginatorInterface;
 
 class Paginator implements PaginationInterface
 {
@@ -36,7 +37,7 @@ class Paginator implements PaginationInterface
         $this->updateNumPages();
     }
     
-    public function paginate(int $page = 1): PaginationInterface
+    public function paginate(int $page = 1): PaginatorInterface
     {
         if ($page <= 0 || $this->limit <= 0) {
             throw new \LogicException("Invalid parameters.");
