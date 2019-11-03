@@ -20,6 +20,7 @@ class Paginator implements PaginationInterface
         if ($page <= 0 || $this->limit <= 0) {
             throw new \LogicException("Invalid parameters.");
         }
+        
         $offset = ($page - 1) * $this->limit;
         $pagination = new DefaultPaginator();
         $items = new Collection($this->items, $offset, $this->limit);
