@@ -7,22 +7,6 @@ use Pagination\Paginator;
 class PaginatorTest extends TestCase
 {
 
-    /** @var Paginator */
-    protected $paginator;
-
-    public function setUp(): void
-    {
-        $numItems = 100;
-        $itemsPerPage = 10;
-        $currentPage = 5;
-        $options = [
-            'numItems' => $numItems,
-            'itemsPerPage' => $itemsPerPage,
-            'currentPage' => $currentPage
-        ];
-        $this->paginator = new Paginator($options);
-    }
-
     public function testArray()
     {
         $itemsPerPage = 10;
