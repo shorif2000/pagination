@@ -28,7 +28,7 @@ class PaginatorTest extends TestCase
     {
         $itemsPerPage = 10;
         $input = range(0, 100);
-        $input = array_slice($input, 0, 20);
+        $input = (object) array_slice($input, 0, 20);
         $options = [
             'data' => $input
         ];
@@ -55,5 +55,59 @@ class PaginatorTest extends TestCase
         $this->assertEquals($pageNumber, $pagination->getCurrentPageNumber());
         $this->assertEquals(count($input), $pagination->getTotal());
         $this->assertEqualsCanonicalizing(array_slice($input, 10, 10),$pagination->getItems());
+    }
+    
+    public function testArrayObject()
+    {
+        $itemsPerPage = 10;        
+        $input = range(0, 100);
+        $input = array_slice($input, 0, 10);
+        $input = new \ArrayObject($input);
+
+        $options = [
+            'data' => $input
+        ];
+        $pageNumber = 1;
+        $pagination = (new Paginator($options))->paginate($pageNumber);
+        
+        $this->assertEquals($itemsPerPage, $pagination->getTotalOnCurrentPage());
+        $this->assertEquals($pageNumber, $pagination->getCurrentPageNumber());
+        $this->assertEquals(count($input), $pagination->getTotal());
+    }
+    
+    
+    public function testArrayObjectPage2()
+    {
+        $itemsPerPage = 10;
+        $input = range(0, 100);
+        $input = (object) array_slice($input, 0, 20);
+        $input = new \ArrayObject($input);
+        $options = [
+            'data' => $input
+        ];
+        $pageNumber = 2;
+        $pagination = (new Paginator($options))->paginate($pageNumber);
+        
+        $this->assertEquals($itemsPerPage, $pagination->getTotalOnCurrentPage());
+        $this->assertEquals($pageNumber, $pagination->getCurrentPageNumber());
+        $this->assertEquals(count($input), $pagination->getTotal());
+    }
+    
+    public function testArrayObjectPage2NotEqualToItemsPerPage()
+    {
+        
+        $input = range(0, 100);
+        $input = (object) array_slice($input, 0, 15);
+        $input = new \ArrayObject($input);
+        $options = [
+            'data' => $input
+        ];
+        $pageNumber = 2;
+        $pagination = (new Paginator($options))->paginate($pageNumber);
+        
+        $this->assertEquals(count(array_slice($input->getArrayCopy(), 10, 10)), $pagination->getTotalOnCurrentPage());
+        $this->assertEquals($pageNumber, $pagination->getCurrentPageNumber());
+        $this->assertEquals($input->count(), $pagination->getTotal());
+        $this->assertEqualsCanonicalizing(array_slice($input->getArrayCopy(), 10, 10),$pagination->getItems()->getArrayCopy());
     }
 }
