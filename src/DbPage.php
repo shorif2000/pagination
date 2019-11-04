@@ -1,7 +1,6 @@
 <?php
 namespace Pagination;
 
-use Pagination\Lib\DefaultPaginator;
 use Pagination\Lib\PaginatorInterface;
 use Pagination\Lib\Collection;
 
@@ -22,8 +21,7 @@ class DbPage extends Paginator
         if ($page <= 0 || $this->limit <= 0) {
             throw new \LogicException("Invalid parameters.");
         }
-        $offset = ($page - 1) * $this->limit;        
-        $pagination = new DefaultPaginator();
+        $offset = ($page - 1) * $this->limit;      
         
         $statement = $this->pdo->prepare('select * from ' . $this->table . ' limit ' . $offset . ', ' . $this->limit);
         $result = $statement->execute();
@@ -35,14 +33,14 @@ class DbPage extends Paginator
         
         $items = new Collection($this->items, $offset, $this->limit);
         
-        $pagination->setCurrentPageNumber($page);
-        $pagination->setNumberOfPages((int) ceil($items->getCount() / $items->getLimit()));
-        $pagination->setItems($items->getItems());
-        $pagination->setTotal($items->getCount());
-        $pagination->setTotalOnCurrentPage(count($items->getItems()));
-        $pagination->setTotalPerPage($this->limit);
+        $this->setCurrentPageNumber($page);
+        $this->setNumberOfPages((int) ceil($items->getCount() / $items->getLimit()));
+        $this->setItems($items->getItems());
+        $this->setTotal($items->getCount());
+        $this->setTotalOnCurrentPage(count($items->getItems()));
+        $this->setTotalPerPage($this->limit);
         
-        return $pagination;
+        return $this;
     }
 
     
