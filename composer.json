@@ -3,7 +3,7 @@
 	"description" : "creates a pagination control structure for a list of items",
 	"authors" : [{
 			"name" : "Sharif Uddin",
-			"email" : "shorif200@hotmail.com"
+			"email" : "shorif200@gmail.com"
 		}
 	],
 	"minimum-stability" : "dev",
