@@ -80,6 +80,20 @@ You can call the following functions to get data
     public function getViewData(): array;
 ```
 
+#### Experimental
+
+For database support.
+
+```php
+$options = [
+    'pdo' => $pdo, //this wll be mysql connection
+    'table'=>'country'
+];
+$pageNumber = 1;
+$pagination = Pagination::factory($options, 'db')->paginate(1);
+```
+
+
 ### Running the tests
 
 `phpunit --debug tests/PaginatorTest.php`
