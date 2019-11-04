@@ -10,7 +10,7 @@ class Pagination
     
     public static function &factory($options, $mode)
     {
-        $classname = ($mode == 'Default') ? 'Pagination\\Paginator' : 'Pagination\\DbPage' ;
+        $classname = ($mode == 'Default') ? 'Pagination\\Paginator' : 'Pagination\\DbPagintaor' ;
         // If the class exists, return a new instance of it.
         if (class_exists($classname)) {
             $pagination = new $classname($options);            

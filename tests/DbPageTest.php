@@ -4,7 +4,7 @@ namespace shorif2000\Tests;
 use PHPUnit\Framework\TestCase;
 use Pagination\Pagination;
 
-class DbPageTest extends TestCase
+class DbPagintaorTest extends TestCase
 {
 
     public function testArray()

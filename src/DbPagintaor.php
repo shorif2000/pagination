@@ -5,7 +5,7 @@ use Pagination\Lib\PaginatorInterface;
 use Pagination\Lib\Collection;
 
 
-class DbPage extends Paginator
+class DbPagintaor extends Paginator
 {
     private $pdo;
     private $table;
