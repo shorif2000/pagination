@@ -3,17 +3,17 @@ namespace Pagination;
 
 class Pagination
 {
-    public function __construct($input = [], $perPage = 10, $mode = 'Default')
+    public function __construct($options = [], $mode = 'Default')
     {
-        $this = Pagination::factory($input, $perPage, $mode);
+        $this = Pagination::factory($options, $mode);
     }
     
-    public static function &factory($input, $perPage, $mode)
+    public static function &factory($options, $mode)
     {
-        $classname = 'Lib\Pagination_' . $mode;
+        $classname = ($mode == 'Default') ? 'Paginator' : 'DbPage' ;
         // If the class exists, return a new instance of it.
         if (class_exists($classname)) {
-            $pagination = new $classname($input, $perPage);
+            $pagination = new $classname($options);
             return $pagination;
         }
         
