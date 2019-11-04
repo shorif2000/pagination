@@ -13,11 +13,12 @@ class DbPageTest extends TestCase
         $input = range(0, 100);
         $input = array_slice($input, 0, 10);
         $options = [
-            'data' => $input
+            'pdo' => '',
+            'table'=>'country'
         ];
         $pageNumber = 1;
-        $pagination = (new Pagination($options))->paginate($pageNumber);
-        
+        $pagination = Pagination::factory($options, 'db')->paginate(1);
+     
         $this->assertEquals($itemsPerPage, $pagination->getTotalOnCurrentPage());
         $this->assertEquals($pageNumber, $pagination->getCurrentPageNumber());
         $this->assertEquals(count($input), $pagination->getTotal());        
