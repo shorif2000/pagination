@@ -9,7 +9,7 @@ class DbPagintaorTest extends TestCase
 
     public function testArray()
     {
-        $this->markAsIncomplete();
+        $this->markTestIncomplete('mysql mock not complete');
         $itemsPerPage = 10;
         $input = range(0, 100);
         $input = array_slice($input, 0, 10);
