@@ -18,6 +18,10 @@ composer require shorif2000/pagination
 For `Array` or `ArrayObject` 
 
 ```php
+use Pagination\Paginator;
+
+...
+
 $pageNumber = [1];
 $options = [
     'data' => [0,1,2,3,4,5,6,7,8,9]
@@ -85,6 +89,10 @@ You can call the following functions to get data
 For database support.
 
 ```php
+use Pagination\Pagination;
+
+...
+
 $options = [
     'pdo' => $pdo, //this wll be mysql connection
     'table'=>'country'
