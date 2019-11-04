@@ -11,6 +11,12 @@ class DbPagintaor extends Paginator
     private $table;
     
     public function __construct($options = []) {
+        if(empty($options['pdo']) || !is_resource($options['pdo'])){
+            throw new \LogicException("Invalid resource.");
+        }
+        if(empty($options['table']) || !is_string($options['table'])){
+            throw new \LogicException("Invalid table.");
+        }
         $this->pdo = $options['pdo'];
         $this->table = $options['table'];
         $this->limit = $options['limit'] ?? 10;
