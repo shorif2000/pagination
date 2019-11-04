@@ -1,13 +1,12 @@
 <?php
 namespace Pagination;
 
-use Pagination\Lib\PaginationInterface;
 use Pagination\Lib\DefaultPaginator;
 use Pagination\Lib\Collection;
 use Pagination\Lib\ArrayData;
 use Pagination\Lib\PaginatorInterface;
 
-class Paginator implements PaginationInterface
+class Paginator
 {
     public $limit; 
     
