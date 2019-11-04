@@ -20,7 +20,10 @@ class PaginatorTest extends TestCase
         
         $this->assertEquals($itemsPerPage, $pagination->getTotalOnCurrentPage());
         $this->assertEquals($pageNumber, $pagination->getCurrentPageNumber());
-        $this->assertEquals(count($input), $pagination->getTotal());        
+        $this->assertEquals(count($input), $pagination->getTotal());  
+        
+        $data = $pagination->getViewData();
+ 
     }
     
     
