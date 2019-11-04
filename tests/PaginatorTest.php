@@ -28,7 +28,7 @@ class PaginatorTest extends TestCase
     {
         $itemsPerPage = 10;
         $input = range(0, 100);
-        $input = (object) array_slice($input, 0, 20);
+        $input = array_slice($input, 0, 20);
         $options = [
             'data' => $input
         ];

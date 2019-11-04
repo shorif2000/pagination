@@ -24,7 +24,7 @@ class Paginator
         
         $offset = ($page - 1) * $this->limit;
         $pagination = new DefaultPaginator();
-        $items = new Collection($this->items, $offset, $this->limit);
+        $items = new Collection($this->items, $offset, $this->limit);        
         if ($this->items instanceof \ArrayObject || is_array($this->items)) {
             $data = new ArrayData();
             $data->fetchItems($items);
