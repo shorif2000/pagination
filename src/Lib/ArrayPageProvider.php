@@ -4,10 +4,11 @@ namespace Pagination\Lib;
 class ArrayPageProvider implements PageProviderInterface
 {
     private $items;
+    private $collection;
     
     public function __construct(array $items) {
-        
-        $this->items = $items;
+             
+        $this->collection = new Collection($items);
     }
     
     public function getTotalCount(): int
@@ -17,6 +18,6 @@ class ArrayPageProvider implements PageProviderInterface
     
     public function getPage(int $offset, int $limit): \Iterator
     {
-        return new \ArrayIterator(\array_slice($this->items, $offset, $limit));
+        return new \ArrayIterator(\array_slice($this->collection->getCollection(), $offset, $limit));
     }
 }

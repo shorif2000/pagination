@@ -1,8 +1,10 @@
 <?php
 namespace Pagination\Lib;
 
+use Countable;
+use Traversable;
 
-interface PaginatorInterface
+interface PaginatorInterface extends Countable, Traversable
 {
     public function getItems();
     
