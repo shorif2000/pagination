@@ -3,7 +3,6 @@ namespace Pagination\Lib;
 
 class ArrayPageProvider implements PageProviderInterface
 {
-    private $items;
     private $collection;
     
     public function __construct(array $items) {
@@ -13,7 +12,7 @@ class ArrayPageProvider implements PageProviderInterface
     
     public function getTotalCount(): int
     {
-        return \count($this->items);
+        return $this->collection->length();
     }
     
     public function getPage(int $offset, int $limit): \Iterator
