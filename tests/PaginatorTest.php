@@ -48,7 +48,7 @@ class PaginatorTest extends TestCase
         $this->assertEquals(count(array_slice($input, 10, 10)), $pagination->getTotalOnCurrentPage());
         $this->assertEquals($pageNumber, $pagination->getCurrentPageNumber());
         $this->assertEquals(count($input), $pagination->getTotal());
-        $this->assertEqualsCanonicalizing(array_slice($input, 10, 10),$pagination->getItems());
+        $this->assertEqualsCanonicalizing(array_slice($input, 10, 10),$pagination->getItems()->getArrayCopy());
     }
     
     public function testArrayObject()

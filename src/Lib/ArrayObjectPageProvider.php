@@ -17,6 +17,6 @@ class ArrayObjectPageProvider implements PageProviderInterface
     
     public function getPage(int $offset, int $limit): \Iterator
     {
-        return new \ArrayIterator(\array_slice($this->items, $offset, $limit));
+        return new \ArrayIterator(\array_slice($this->items->getArrayCopy(), $offset, $limit));
     }
 }
