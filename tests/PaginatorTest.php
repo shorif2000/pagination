@@ -3,27 +3,24 @@ namespace shorif2000\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Pagination\Paginator;
+use Pagination\PaginatorFactory;
+use Pagination\Lib\ArrayPageProvider;
 
 class PaginatorTest extends TestCase
 {
 
     public function testArray()
     {
+        $pageNumber = 1;
         $itemsPerPage = 10;
         $input = range(0, 100);
         $input = array_slice($input, 0, 10);
-        $options = [
-            'data' => $input
-        ];
-        $pageNumber = 1;
-        $pagination = (new Paginator($options))->paginate($pageNumber);
+        $pagination = (new PaginatorFactory(new ArrayPageProvider($input)))->createPaginator($pageNumber, $itemsPerPage);
         
         $this->assertEquals($itemsPerPage, $pagination->getTotalOnCurrentPage());
         $this->assertEquals($pageNumber, $pagination->getCurrentPageNumber());
         $this->assertEquals(count($input), $pagination->getTotal());  
-        
-        $data = $pagination->getViewData();
- 
+         
     }
     
     
@@ -32,11 +29,8 @@ class PaginatorTest extends TestCase
         $itemsPerPage = 10;
         $input = range(0, 100);
         $input = array_slice($input, 0, 20);
-        $options = [
-            'data' => $input
-        ];
         $pageNumber = 2;
-        $pagination = (new Paginator($options))->paginate($pageNumber);
+        $pagination = (new PaginatorFactory(new ArrayPageProvider($input)))->createPaginator($pageNumber, $itemsPerPage);
 
         $this->assertEquals($itemsPerPage, $pagination->getTotalOnCurrentPage());
         $this->assertEquals($pageNumber, $pagination->getCurrentPageNumber());
@@ -45,14 +39,11 @@ class PaginatorTest extends TestCase
     
     public function testArrayPage2NotEqualToItemsPerPage()
     {
-        
+        $itemsPerPage = 10;
         $input = range(0, 100);
         $input = array_slice($input, 0, 15);
-        $options = [
-            'data' => $input
-        ];
         $pageNumber = 2;
-        $pagination = (new Paginator($options))->paginate($pageNumber);
+        $pagination = (new PaginatorFactory(new ArrayPageProvider($input)))->createPaginator($pageNumber, $itemsPerPage);
         
         $this->assertEquals(count(array_slice($input, 10, 10)), $pagination->getTotalOnCurrentPage());
         $this->assertEquals($pageNumber, $pagination->getCurrentPageNumber());
@@ -66,12 +57,8 @@ class PaginatorTest extends TestCase
         $input = range(0, 100);
         $input = array_slice($input, 0, 10);
         $input = new \ArrayObject($input);
-
-        $options = [
-            'data' => $input
-        ];
         $pageNumber = 1;
-        $pagination = (new Paginator($options))->paginate($pageNumber);
+        $pagination = (new PaginatorFactory(new ArrayPageProvider($input)))->createPaginator($pageNumber, $itemsPerPage);
         
         $this->assertEquals($itemsPerPage, $pagination->getTotalOnCurrentPage());
         $this->assertEquals($pageNumber, $pagination->getCurrentPageNumber());
@@ -85,11 +72,8 @@ class PaginatorTest extends TestCase
         $input = range(0, 100);
         $input = (object) array_slice($input, 0, 20);
         $input = new \ArrayObject($input);
-        $options = [
-            'data' => $input
-        ];
         $pageNumber = 2;
-        $pagination = (new Paginator($options))->paginate($pageNumber);
+        $pagination = (new PaginatorFactory(new ArrayPageProvider($input)))->createPaginator($pageNumber, $itemsPerPage);
         
         $this->assertEquals($itemsPerPage, $pagination->getTotalOnCurrentPage());
         $this->assertEquals($pageNumber, $pagination->getCurrentPageNumber());
@@ -98,15 +82,12 @@ class PaginatorTest extends TestCase
     
     public function testArrayObjectPage2NotEqualToItemsPerPage()
     {
-        
+        $itemsPerPage = 10;
         $input = range(0, 100);
         $input = (object) array_slice($input, 0, 15);
         $input = new \ArrayObject($input);
-        $options = [
-            'data' => $input
-        ];
         $pageNumber = 2;
-        $pagination = (new Paginator($options))->paginate($pageNumber);
+        $pagination = (new PaginatorFactory(new ArrayPageProvider($input)))->createPaginator($pageNumber, $itemsPerPage);
         
         $this->assertEquals(count(array_slice($input->getArrayCopy(), 10, 10)), $pagination->getTotalOnCurrentPage());
         $this->assertEquals($pageNumber, $pagination->getCurrentPageNumber());
