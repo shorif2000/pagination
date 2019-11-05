@@ -2,7 +2,8 @@
 namespace shorif2000\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Pagination\Pagination;
+use Pagination\PaginatorFactory;
+use Pagination\Lib\DbPagintaor;
 
 class DbPagintaorTest extends TestCase
 {
@@ -10,15 +11,13 @@ class DbPagintaorTest extends TestCase
     public function testArray()
     {
         $this->markTestIncomplete('mysql mock not complete');
+        $pageNumber = 1;
         $itemsPerPage = 10;
         $input = range(0, 100);
         $input = array_slice($input, 0, 10);
-        $options = [
-            'pdo' => '',
-            'table'=>'country'
-        ];
-        $pageNumber = 1;
-        $pagination = Pagination::factory($options, 'db')->paginate(1);
+        $pdo = '';
+        $table = 'country';
+        $pagination = (new PaginatorFactory(new DbPagintaor($pdo, $table)))->createPaginator($pageNumber, $itemsPerPage);
      
         $this->assertEquals($itemsPerPage, $pagination->getTotalOnCurrentPage());
         $this->assertEquals($pageNumber, $pagination->getCurrentPageNumber());

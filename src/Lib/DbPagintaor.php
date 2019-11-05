@@ -1,8 +1,5 @@
 <?php
-namespace Pagination;
-
-use Pagination\Lib\PageProviderInterface;
-
+namespace Pagination\Lib;
 
 class DbPagintaor implements PageProviderInterface
 {
