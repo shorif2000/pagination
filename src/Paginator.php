@@ -57,6 +57,9 @@ class Paginator implements PaginatorInterface
     {
         return $this->itemsPerPage;
     }
+    public function count()
+    {}
+
 
     
 }
