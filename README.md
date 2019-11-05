@@ -15,73 +15,51 @@ composer require shorif2000/pagination
 
 ### Usage
 
-For `Array` or `ArrayObject` 
+#### Array 
 
 ```php
-use Pagination\Paginator;
+use Pagination\PaginatorFactory;
+use Pagination\Lib\ArrayPageProvider;
 
 ...
 
-$pageNumber = [1];
-$options = [
-    'data' => [0,1,2,3,4,5,6,7,8,9]
-];
-$pagination = (new Paginator($options))->paginate($pageNumber);
-
-print_r($pagination->getViewData());
+$pageNumber = 1;
+$itemsPerPage = 10;
+$input = range(0, 100);
+$input = array_slice($input, 0, 10);
+$pagination = (new PaginatorFactory(new ArrayPageProvider($input)))->createPaginator($pageNumber, $itemsPerPage);
 ```
-results in 
 
-```
-Array
-(
-    [elements] => Array
-        (
-            [0] => 0
-            [1] => 1
-            [2] => 2
-            [3] => 3
-            [4] => 4
-            [5] => 5
-            [6] => 6
-            [7] => 7
-            [8] => 8
-            [9] => 9
-        )
+#### ArrayObject
 
-    [currentPage] => 1
-    [pages] => 1
-    [totalElements] => 10
-    [totalElementsOnCurrentPage] => 10
-    [totalElementsPerPage] => 10
-)
+```php
+use Pagination\PaginatorFactory;
+use Pagination\Lib\ArrayObjectPageProvider;
 
+...
+
+$itemsPerPage = 10;        
+$input = range(0, 100);
+$input = array_slice($input, 0, 10);
+$input = new \ArrayObject($input);
+$pageNumber = 1;
+$pagination = (new PaginatorFactory(new ArrayObjectPageProvider($input)))->createPaginator($pageNumber, $itemsPerPage);
 ```
 
 You can call the following functions to get data
 
 ```php
     public function getItems();
-
-    public function setItems($items);
-
+    
     public function getCurrentPageNumber(): int;
-
-    public function setCurrentPageNumber($currentPageNumber);
-
+    
     public function getNumberOfPages(): int;
-
-    public function setNumberOfPages($numberOfPages);
-
+    
     public function getTotal(): int;
-
-    public function setTotal($total);
-
+    
     public function getTotalOnCurrentPage(): int;
-
+    
     public function getTotalPerPage(): int;
-
-    public function getViewData(): array;
 ```
 
 #### Experimental
@@ -89,16 +67,19 @@ You can call the following functions to get data
 For database support.
 
 ```php
-use Pagination\Pagination;
+
+use Pagination\PaginatorFactory;
+use Pagination\Lib\DbPagintaor;
 
 ...
 
-$options = [
-    'pdo' => $pdo, //this wll be mysql connection
-    'table'=>'country'
-];
 $pageNumber = 1;
-$pagination = Pagination::factory($options, 'db')->paginate(1);
+$itemsPerPage = 10;
+$input = range(0, 100);
+$input = array_slice($input, 0, 10);
+$pdo = ''; // mysql resource
+$table = 'country';
+$pagination = (new PaginatorFactory(new DbPagintaor($pdo, $table)))->createPaginator($pageNumber, $itemsPerPage);
 ```
 
 
