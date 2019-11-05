@@ -2,7 +2,6 @@
 namespace shorif2000\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Pagination\Paginator;
 use Pagination\PaginatorFactory;
 use Pagination\Lib\ArrayPageProvider;
 use Pagination\Lib\ArrayObjectPageProvider;
